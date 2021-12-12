@@ -1,0 +1,1 @@
+export  { XMLFetcher }  from './fetcher';
