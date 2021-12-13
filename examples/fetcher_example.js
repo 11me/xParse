@@ -1,13 +1,12 @@
-const { XMLFetcher, RSSParser } = require('../lib');
+const { RSSParser } = require('../lib/parsers/rss-parser');
 
-const fetcher = new XMLFetcher();
 const rssParser = new RSSParser();
 const url = 'https://ir.tripadvisor.com/rss/news-releases.xml?items=15';
 
 
 (async () => {
-  const xml = await fetcher.fetch(url);
 
-  const json = await rssParser.parse(xml);
+  const json = await rssParser.parse(url);
   console.log(json)
+
 })()
