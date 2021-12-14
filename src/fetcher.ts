@@ -3,7 +3,7 @@ import fetch from 'node-fetch-commonjs';
 
 export class XMLFetcher implements Fetcher {
 
-  headers: Record<string, string>
+  private headers: Record<string, string>
 
   constructor() {
     this.headers = {
@@ -22,4 +22,29 @@ export class XMLFetcher implements Fetcher {
 
   }
 
+}
+
+export class HTMLFetcher implements Fetcher {
+
+  private headers: Record<string, string>
+
+  constructor() {
+    this.headers = {
+      'User-Agent': 'xParse',
+      'Accept': 'text/html'
+    }
+  }
+
+  async fetch(source: string): Promise<string> {
+
+      const response = await fetch(source, {
+        headers: this.headers
+      });
+
+      if (!response.ok) throw new Error(`Could not fetch html from ${source}`)
+
+      const page = await response.text();
+
+      return page
+  }
 }
