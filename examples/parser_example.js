@@ -1,24 +1,35 @@
 const { RSSParser } = require('../lib/parsers/rss-parser');
-const { HTMLExtractor } = require('../lib/extractors/html-extractor');
+const { HTMLParser } = require('../lib/parsers/html-parser');
 
 const url = 'https://ir.tripadvisor.com/rss/news-releases.xml?items=15';
-const vcsrc = 'https://vc.ru/services/333747-apple-vypustila-ios-15-2-s-funkciey-cifrovoe-nasledstvo-i-proshivku-dlya-apple-tv-i-homepod-s-russkoyazychnoy-siri';
+const vc = 'https://vc.ru';
 
 const rssParser = new RSSParser();
-const extractor = new HTMLExtractor();
+const htmlParser = new HTMLParser();
+
+const options = {
+
+  'item_links': {
+    'selector': '.content-link'
+  },
+  'title': {
+    'selector': 'title'
+  },
+  'author': {
+    'selector': '.l-entry__header > div:nth-child(1) > div:nth-child(1) > a:nth-child(2) > div:nth-child(1)'
+  },
+  'content': {
+    'selector': 'div.content:nth-child(1) > div:nth-child(3) > p:nth-child(1)'
+  }
+};
 
 (async () => {
 
   const json = await rssParser.parse(url);
   console.log(json);
 
-  const extractedFromHtml = await extractor.extract(vcsrc,
-    {
-      'title': 'title',
-      'content': 'div.content:nth-child(1) > div:nth-child(3) > p:nth-child(1)',
-      'views': '.views__value',
-      'published': 'div.content-header-number > span:nth-child(1) > time:nth-child(1)'
-    });
-  console.log(extractedFromHtml);
+  const html = await htmlParser.parse(vc, options)
+
+  console.log(html);
 
 })();
