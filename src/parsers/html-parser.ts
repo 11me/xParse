@@ -4,10 +4,9 @@ import { Parser } from '../types';
 
 export class HTMLParser implements Parser {
 
-  public async parse(
-    from: string,
-    options: Object
-  ): Promise<Record<string, string>[]> {
+  public async parse(options: Object): Promise<Record<string, string>[]> {
+
+    const from = options['options']['url'];
 
     const htmlExtractor = new HTMLExtractor();
     const html = await htmlExtractor.extract(from);
@@ -16,7 +15,7 @@ export class HTMLParser implements Parser {
     const items = [];
 
     // get all news link on the page
-    $(options['item_links']['selector']).map((_, item) => {
+    $(options['pages']['selectors']).map((_, item) => {
 
       items.push($(item).attr('href'));
 
@@ -36,12 +35,12 @@ export class HTMLParser implements Parser {
         // get requested content via selector
         Object.keys(options).map(key => {
 
-          const selectors = options[key]['selector'];
+          const selectors = options[key]['selectors'];
           if (Array.isArray(selectors)) {
 
             selectors.map(selector => {
 
-              if (key !== 'item_links') {
+              if ((key !== 'pages') && (key !== 'options')) {
 
                 result[key] ? (result[key] = result[key] + $(selector).text().trim())
                   : (result[key] = $(selector).text().trim())
@@ -51,7 +50,7 @@ export class HTMLParser implements Parser {
 
           } else {
 
-            if (key !== 'item_links') {
+            if ((key !== 'pages') && (key !== 'options')) {
 
               result[key] = $(selectors).text().trim();
             }

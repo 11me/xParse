@@ -3,7 +3,7 @@ export interface Fetcher {
 }
 
 export interface Parser {
-  parse(from: string, options?: Object): Promise<Record<string, string>[]>
+  parse(options: Object): Promise<Record<string, string>[]>
 }
 
 export interface Extractor {
