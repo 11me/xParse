@@ -10,4 +10,8 @@ $ cd xParse
 $ npm install
 $ npm run build
 ```
+Run example with HTML
+```
+$ npm run html
+```
 You can see the example in example directory.
