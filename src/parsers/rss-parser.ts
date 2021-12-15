@@ -12,20 +12,13 @@ export class RSSParser implements Parser {
 
   public async parse(options: Object): Promise<Record<string, string>[]> {
 
-    const from = options['options']['url'];
+    const from = options['description']['url'];
 
-    try {
+    const fetchedText = await this.fetcher.fetch(from)
 
-      const fetchedText = await this.fetcher.fetch(from)
+    const result = await parseStringPromise(fetchedText);
 
-      const result = await parseStringPromise(fetchedText);
-
-      return result.rss.channel;
-
-    } catch (err) {
-      //TODO: Handle error
-      console.log(`Error while parsing ${err}`);
-    }
+    return result.rss.channel;
 
   }
 
