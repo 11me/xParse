@@ -13,13 +13,13 @@ const options = {
     'selector': '.content-link'
   },
   'title': {
-    'selector': 'title'
+    'selector': 'title',
   },
   'author': {
     'selector': '.l-entry__header > div:nth-child(1) > div:nth-child(1) > a:nth-child(2) > div:nth-child(1)'
   },
   'content': {
-    'selector': 'div.content:nth-child(1) > div:nth-child(3) > p:nth-child(1)'
+    'selector': '.l-island-a > p'
   }
 };
 

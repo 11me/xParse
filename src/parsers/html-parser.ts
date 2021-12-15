@@ -36,17 +36,31 @@ export class HTMLParser implements Parser {
         // get requested content via selector
         Object.keys(options).map(key => {
 
-          const selector = options[key]['selector'];
+          const selectors = options[key]['selector'];
+          if (Array.isArray(selectors)) {
 
-          if (key !== 'item_links') {
+            selectors.map(selector => {
 
-            result[key] = $(selector).text().trim();
+              if (key !== 'item_links') {
+
+                result[key] ? (result[key] = result[key] + $(selector).text().trim())
+                  : (result[key] = $(selector).text().trim())
+              }
+
+            });
+
+          } else {
+
+            if (key !== 'item_links') {
+
+              result[key] = $(selectors).text().trim();
+            }
+
           }
 
         });
           return result
-      })
-    );
+      }));
 
     return resultArr;
   }
