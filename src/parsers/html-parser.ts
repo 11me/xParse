@@ -4,59 +4,44 @@ import { Parser } from '../types';
 
 export class HTMLParser implements Parser {
 
-  public async parse(
-    from: string,
-    options: Object
-  ): Promise<Record<string, string>[]> {
+  public async parse(options: Object): Promise<Record<string, string>[]> {
+
+    const from = options['description']['url'];
 
     const htmlExtractor = new HTMLExtractor();
     const html = await htmlExtractor.extract(from);
 
     const $ = cheerio.load(html);
-    const items = [];
+    const pages = [];
 
     // get all news link on the page
-    $(options['item_links']['selector']).map((_, item) => {
-
-      items.push($(item).attr('href'));
-
+    $(options['description']['page_selector'])
+      .each((_, page) => {
+        pages.push($(page).attr('href'));
     });
 
     const resultArr = Promise.all(
 
       // visit each page
-      items.map(async item => {
+      pages.map(async page => {
 
         const result = {};
 
         // extract html from the page
-        const html = await htmlExtractor.extract(item);
+        const html = await htmlExtractor.extract(page);
         const $ = cheerio.load(html);
 
         // get requested content via selector
-        Object.keys(options).map(key => {
+        Reflect.ownKeys(options['options']).map(key => {
 
-          const selectors = options[key]['selector'];
-          if (Array.isArray(selectors)) {
+          const selectors = options['options'][key]['selectors'];
 
             selectors.map(selector => {
 
-              if (key !== 'item_links') {
-
-                result[key] ? (result[key] = result[key] + $(selector).text().trim())
-                  : (result[key] = $(selector).text().trim())
-              }
+              result[key] ? (result[key] = result[key] + $(selector).text().trim())
+                : (result[key] = $(selector).text().trim())
 
             });
-
-          } else {
-
-            if (key !== 'item_links') {
-
-              result[key] = $(selectors).text().trim();
-            }
-
-          }
 
         });
           return result

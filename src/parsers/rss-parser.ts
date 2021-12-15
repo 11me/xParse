@@ -10,7 +10,9 @@ export class RSSParser implements Parser {
     this.fetcher = new XMLFetcher()
   }
 
-  public async parse(from: string): Promise<Record<string, string>[]> {
+  public async parse(options: Object): Promise<Record<string, string>[]> {
+
+    const from = options['options']['url'];
 
     try {
 
