@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "example": "node ./examples/*.js"
+    "rss": "node ./examples/rss_example.js",
+    "html": "node ./examples/html_example.js"
   },
   "keywords": [
     "rss",
