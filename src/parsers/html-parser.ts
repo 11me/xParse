@@ -1,10 +1,11 @@
 import * as cheerio from 'cheerio';
 import { HTMLExtractor } from '../extractors/html-extractor';
 import { Parser } from '../types';
+import { Feed, Options } from '../models';
 
 export class HTMLParser implements Parser {
 
-  public async parse(options: Object): Promise<Record<string, string>[]> {
+  public async parse(options: Options): Promise<Feed[]> {
 
     const from = options['description']['url'];
 
@@ -13,6 +14,7 @@ export class HTMLParser implements Parser {
 
     const $ = cheerio.load(html);
     const pages = [];
+    let feeds;
 
     // get all news link on the page
     $(options['description']['page_selector'])
@@ -20,7 +22,7 @@ export class HTMLParser implements Parser {
         pages.push($(page).attr('href'));
     });
 
-    const resultArr = Promise.all(
+    feeds = Promise.all(
 
       // visit each page
       pages.map(async page => {
@@ -47,6 +49,6 @@ export class HTMLParser implements Parser {
           return result
       }));
 
-    return resultArr;
+    return feeds;
   }
 }
