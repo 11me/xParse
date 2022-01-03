@@ -33,11 +33,17 @@ export class XMLFetcher implements Fetcher {
 export class HTMLFetcher implements Fetcher {
 
   private headers: Record<string, string>
+  private fetchProvider: Function
 
-  constructor() {
+  constructor(fetchProvider?: Function) {
     this.headers = {
       'User-Agent': 'xParse',
       'Accept': 'text/html'
+    }
+    if (fetchProvider) {
+      this.fetchProvider = fetchProvider;
+    } else {
+      this.fetchProvider = fetch;
     }
   }
 
