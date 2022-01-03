@@ -1,4 +1,4 @@
-module.exports = {
+export const vcru = {
 
   'description': {
     'url': 'https://vc.ru',

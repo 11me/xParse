@@ -1,4 +1,4 @@
-module.exports = {
+export const thehackernews = {
 
   'description': {
     'url': 'https://thehackernews.com',
