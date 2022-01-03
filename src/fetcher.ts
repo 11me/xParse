@@ -4,17 +4,23 @@ import fetch from 'node-fetch-commonjs';
 export class XMLFetcher implements Fetcher {
 
   private headers: Record<string, string>
+  private fetchProvider: Function
 
-  constructor() {
+  constructor(fetchProvider?: Function) {
     this.headers = {
       'User-Agent': 'xParse',
       'Accept': 'application/rss+xml,application/xhtml+xml,application/xml;q=0.9'
+    }
+    if (fetchProvider) {
+      this.fetchProvider = fetchProvider;
+    } else {
+      this.fetchProvider = fetch;
     }
   }
 
   async fetch(source: string): Promise<string> {
 
-    const resp = await fetch(source, {
+    const resp = await this.fetchProvider(source, {
       headers: this.headers
     })
 
