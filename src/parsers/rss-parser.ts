@@ -1,6 +1,7 @@
 import { Parser } from '../types';
 import { parseStringPromise } from 'xml2js';
 import { XMLFetcher } from '../fetcher';
+import { Feed, Options } from '../models';
 
 export class RSSParser implements Parser {
 
@@ -10,7 +11,7 @@ export class RSSParser implements Parser {
     this.fetcher = new XMLFetcher()
   }
 
-  public async parse(options: Object): Promise<Record<string, string>[]> {
+  public async parse(options: Options): Promise<Feed[]> {
 
     const from = options['description']['url'];
 

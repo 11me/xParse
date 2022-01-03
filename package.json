@@ -1,7 +1,7 @@
 {
   "name": "@11me/xparse",
-  "version": "0.0.4",
-  "description": "Simple rss parser",
+  "version": "0.0.5",
+  "description": "Simple html and rss parser",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -14,7 +14,8 @@
   },
   "keywords": [
     "rss",
-    "rssparser"
+    "rssparser",
+    "html parser"
   ],
   "author": "lime",
   "license": "GPL-3.0",
