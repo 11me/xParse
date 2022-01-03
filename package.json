@@ -1,5 +1,5 @@
 {
-  "name": "xparse",
+  "name": "@11me/xparse",
   "version": "0.0.3",
   "description": "Simple rss parser",
   "main": "lib/index.js",
