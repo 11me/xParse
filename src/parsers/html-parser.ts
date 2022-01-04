@@ -1,16 +1,18 @@
 import * as cheerio from 'cheerio';
-import { HTMLExtractor } from '../extractors/html-extractor';
-import { Parser } from '../types';
 import { Feed, Options } from '../models';
+import { BaseParser } from './base-parser';
 
-export class HTMLParser implements Parser {
+export class HTMLParser extends BaseParser {
+
+  constructor(fetchProvider?: Function) {
+    super(fetchProvider)
+  }
 
   public async parse(options: Options): Promise<Feed[]> {
 
     const from = options['description']['url'];
 
-    const htmlExtractor = new HTMLExtractor();
-    const html = await htmlExtractor.extract(from);
+    const html = await this.fetch(from)
 
     const $ = cheerio.load(html);
     const pages = [];
@@ -25,12 +27,12 @@ export class HTMLParser implements Parser {
     feeds = Promise.all(
 
       // visit each page
-      pages.map(async page => {
+      pages.map(async pageURL => {
 
         const result = {};
 
         // extract html from the page
-        const html = await htmlExtractor.extract(page);
+        const html = await this.fetch(pageURL);
         const $ = cheerio.load(html);
 
         // get requested content via selector
