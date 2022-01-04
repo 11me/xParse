@@ -1,8 +1,10 @@
+const fetch = require('node-fetch-commonjs');
 const { HTMLParser } = require('../lib/parsers/html-parser');
+
 //const { vcru } = require('../lib/options/vc-ru');
 const { thehackernews } = require('../lib/options/thehackernews-com');
 
-const htmlParser = new HTMLParser();
+const htmlParser = new HTMLParser(fetch);
 
 htmlParser.parse(thehackernews)
   .then(news => console.log(news))

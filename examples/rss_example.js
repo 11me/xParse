@@ -1,6 +1,7 @@
+const fetch = require('node-fetch-commonjs');
 const { RSSParser } = require('../lib/parsers/rss-parser');
 
-const rssParser = new RSSParser();
+const rssParser = new RSSParser(fetch);
 
 const rssOpts = {
   'description': {

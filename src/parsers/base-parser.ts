@@ -1,5 +1,3 @@
-import fetch from "node-fetch-commonjs";
-
 export class BaseParser {
 
   protected fetchProvider: Function;
