@@ -24,15 +24,20 @@ export class BaseParser {
 
   protected async fetch(url: string): Promise<string> {
 
-    const response = await this.fetchProvider(url, {
-        headers: this.headers
-      });
+    try {
+      const response = await this.fetchProvider(url, {
+          headers: this.headers
+        });
 
       if (!response.ok) throw new Error(`Could not fetch from ${url}`);
 
       const resource = await response.text();
 
       return resource;
+
+    } catch (e) {
+      throw new Error(`Network error: ${e}`)
+    }
   }
 
 }
