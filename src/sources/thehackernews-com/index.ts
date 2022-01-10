@@ -3,7 +3,7 @@ export const thehackernews = {
   'description': {
     'url': 'https://thehackernews.com',
     'page_selector': 'a.story-link',
-    'type': 'HackerNews'
+    'creator': 'The HackerNews'
   },
   'options': {
     'title': {
@@ -15,7 +15,7 @@ export const thehackernews = {
     'pubDate': {
       'selectors': ['span.author:nth-child(2)']
     },
-    'content': {
+    'description': {
       'selectors': ['p']
     }
   }

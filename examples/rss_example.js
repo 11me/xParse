@@ -11,4 +11,6 @@ const rssParser = new RSSParser(fetchProvider);
 const url = 'https://ir.tripadvisor.com/rss/news-releases.xml?items=15';
 
 rssParser.parse(url)
-  .then(rss => rss[0].item.forEach(item => console.log(item)));
+  .then(rss => {
+    console.log(rss)
+  })

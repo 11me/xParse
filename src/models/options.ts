@@ -2,7 +2,7 @@ export interface Options {
   description: {
     url: string
     page_selector: string
-    type?: string
+    creator: string
   }
   options: {
     title: {
@@ -14,7 +14,7 @@ export interface Options {
     pubDate: {
       selectors: Array<string> | string
     }
-    content: {
+    description: {
       selectors: Array<string> | string
     }
   }

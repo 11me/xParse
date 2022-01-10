@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import { Feed, Options } from '../models';
 import { BaseParser } from './base-parser';
+import { hashCode } from '../helpers';
 
 export class HTMLParser extends BaseParser {
 
@@ -11,6 +12,7 @@ export class HTMLParser extends BaseParser {
   public async parse(options: Options): Promise<Feed[]> {
 
     const from = options['description']['url'];
+    const creator = options['description']['creator']
 
     const html = await this.fetch(from)
 
@@ -29,7 +31,13 @@ export class HTMLParser extends BaseParser {
       // visit each page
       pages.map(async pageURL => {
 
-        const result = {};
+        const guid = hashCode(pageURL);
+
+        const result = {
+          link: pageURL,
+          creator,
+          guid
+        };
 
         // extract html from the page
         const html = await this.fetch(pageURL);
@@ -42,8 +50,13 @@ export class HTMLParser extends BaseParser {
 
             selectors.map(selector => {
 
-              result[key] ? (result[key] = result[key] + $(selector).text().trim())
-                : (result[key] = $(selector).text().trim())
+              //result[key] ? (result[key] = result[key] + $(selector).text().trim())
+               // : (result[key] = $(selector).text().trim())
+
+              if (result[key]) {
+                return result[key] = result[key] + $(selector).text().trim()
+              }
+              return result[key] = $(selector).text().trim()
 
             });
 

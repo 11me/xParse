@@ -3,7 +3,7 @@ export const vcru = {
   'description': {
     'url': 'https://vc.ru',
     'page_selector': '.content-link',
-    'type': 'News portal'
+    'creator': 'vc.ru'
   },
   'options': {
     'title': {
@@ -15,7 +15,7 @@ export const vcru = {
     'pubDate': {
       'selectors': ['div.content-header-number > span:nth-child(1) > time:nth-child(1)']
     },
-    'content': {
+    'description': {
       'selectors': ['.l-island-a > p']
     }
   }
