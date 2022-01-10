@@ -1,18 +1,16 @@
 import { parseStringPromise } from 'xml2js';
-import { Feed, Options } from '../models';
+import { Feed } from '../models';
 import { BaseParser } from './base-parser';
 
 export class RSSParser extends BaseParser {
 
   constructor(fetchProvider?: Function) {
-    super(fetchProvider)
+    super(fetchProvider);
   }
 
-  public async parse(options: Options): Promise<Feed[]> {
+  public async parse(url: string): Promise<Feed[]> {
 
-    const from = options['description']['url'];
-
-    const resource = await this.fetch(from)
+    const resource = await this.fetch(url);
 
     const result = await parseStringPromise(resource);
 
