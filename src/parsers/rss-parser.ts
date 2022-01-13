@@ -30,6 +30,7 @@ export class RSSParser extends BaseParser {
             item[key] = hashCode(item['link']);
           } catch(e) {
             // use existing guid
+            item[key] = item[key]['_'];
           }
         }
       });
