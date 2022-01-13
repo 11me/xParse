@@ -26,7 +26,11 @@ export class RSSParser extends BaseParser {
         item[key] = item[key][0];
         item['creator'] = creator;
         if (key === 'guid') {
-          item[key] = hashCode(item['link']);
+          try {
+            item[key] = hashCode(item['link']);
+          } catch(e) {
+            // use existing guid
+          }
         }
       });
 
